@@ -1,11 +1,33 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Alert, Text, View } from "react-native";
 import MyBtn from "../components/myBtn";
 import styles from "../components/styles";
+import * as ScreenOrientation from "expo-screen-orientation";
 
 export default function Questions() {
+  const [currentState, setState] = useState(0);
+
+  useEffect(() => {
+    const subscription = ScreenOrientation.addOrientationChangeListener(
+      (event) => {
+        if (
+          event.orientationInfo.orientation === 3 ||
+          event.orientationInfo.orientation === 4
+        ) {
+          setState(1);
+        } else if (event.orientationInfo.orientation === 1) {
+          setState(0);
+        }
+      }
+    );
+
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(subscription);
+    };
+  }, []);
+
   const questions = [
     {
       question:
@@ -105,7 +127,9 @@ export default function Questions() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header2}>
+      <View
+        style={Number(currentState) === 0 ? styles.header2 : styles.header3}
+      >
         <Text style={styles.headerText}>
           {questions[questionIndex].question}
         </Text>

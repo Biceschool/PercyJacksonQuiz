@@ -21,6 +21,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  header3: {
+    flex: 0.5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   startQuiz: {
     flex: 1,
     justifyContent: "center",
