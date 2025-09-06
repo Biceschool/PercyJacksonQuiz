@@ -1,4 +1,4 @@
-import MyBtn from "@/components/myBtn";
+import MyBtn from "../components/myBtn";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
@@ -6,20 +6,20 @@ import styles from "../components/styles";
 import * as ScreenOrientation from "expo-screen-orientation";
 
 export default function Index() {
-  ScreenOrientation.unlockAsync();
-
-  const [currentState, setState] = useState(0);
+  const [orientation, setOrientation] = useState(0);
 
   useEffect(() => {
+    ScreenOrientation.unlockAsync();
+
     const subscription = ScreenOrientation.addOrientationChangeListener(
       (event) => {
         if (
           event.orientationInfo.orientation === 3 ||
           event.orientationInfo.orientation === 4
         ) {
-          setState(1);
+          setOrientation(1);
         } else if (event.orientationInfo.orientation === 1) {
-          setState(0);
+          setOrientation(0);
         }
       }
     );
@@ -31,7 +31,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <View style={currentState === 0 ? styles.header : styles.header2}>
+      <View style={orientation === 0 ? styles.header : styles.header2}>
         <Text style={styles.headerText}>
           Percy Jackson and the Olympians Quiz
         </Text>

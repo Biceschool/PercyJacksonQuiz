@@ -7,7 +7,7 @@ import styles from "../components/styles";
 import * as ScreenOrientation from "expo-screen-orientation";
 
 export default function Questions() {
-  const [currentState, setState] = useState(0);
+  const [orientation, setOrientation] = useState(0);
 
   useEffect(() => {
     const subscription = ScreenOrientation.addOrientationChangeListener(
@@ -16,9 +16,9 @@ export default function Questions() {
           event.orientationInfo.orientation === 3 ||
           event.orientationInfo.orientation === 4
         ) {
-          setState(1);
+          setOrientation(1);
         } else if (event.orientationInfo.orientation === 1) {
-          setState(0);
+          setOrientation(0);
         }
       }
     );
@@ -127,9 +127,7 @@ export default function Questions() {
 
   return (
     <View style={styles.container}>
-      <View
-        style={Number(currentState) === 0 ? styles.header2 : styles.header3}
-      >
+      <View style={Number(orientation) === 0 ? styles.header2 : styles.header3}>
         <Text style={styles.headerText}>
           {questions[questionIndex].question}
         </Text>
